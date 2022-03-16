@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-03-15 23:24:09
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-03-16 17:36:49
+ * @LastEditTime: 2022-03-16 17:38:19
  */
 import React, { useEffect, useState } from "react"
 import emojis from "./emoji"
@@ -40,7 +40,7 @@ const EmojiPicker = (props: Props) => {
     setEmojiTable(data)
   }
   
-  const clickEmoji = (e: { target: { localName: string; innerText: string }; preventDefault: () => void }) => {
+  const clickEmoji = (e: any) => {
     if (e.target.localName === 'span') {      
       props.clickEmoji(e.target.innerText)
     }
