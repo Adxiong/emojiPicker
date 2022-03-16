@@ -1,43 +1,47 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+/*
+ * @Description: 
+ * @version: 
+ * @Author: Adxiong
+ * @Date: 2022-03-15 23:15:28
+ * @LastEditors: Adxiong
+ * @LastEditTime: 2022-03-16 17:34:52
+ */
+import { useRef, useState } from 'react'
+import EmojiPicker from './components/emojiPicker/emojiPicker'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [EmojiDisplay, setEmojiDisplay] = useState<boolean>(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [textareaValue, setTextareaValue ] = useState<string>()
+  const clickEmoji = (emoji: string) => {
+    setTextareaValue(textareaValue+emoji)
+    textareaRef.current?.focus()  
+    showEmoji()
+  }
+  const showEmoji = () => {
+    setEmojiDisplay(!EmojiDisplay)
+  }
+  const textAreaChange = () => {
+    setTextareaValue(textareaRef.current?.value)
+    
+  }
+  const send = () => {
+    console.log(textareaRef.current?.value);
+    
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <div>
+        <span onClick={showEmoji}>emoji</span>
+        {
+          EmojiDisplay && <EmojiPicker clickEmoji={clickEmoji}/>
+        } 
+      </div>
+      <div>
+        <textarea ref={textareaRef} cols={30} rows={20} value={textareaValue} onChange={textAreaChange}></textarea>
+      </div>
+      <button onClick={send}>发送</button>
     </div>
   )
 }
